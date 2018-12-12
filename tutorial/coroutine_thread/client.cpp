@@ -1,7 +1,7 @@
 #include <boost/thread.hpp>
 #include <boost/asio.hpp>
 #include <boost/date_time.hpp>
-#include "coroutine.h"
+#include <libgo/coroutine.h>
 
 static const uint16_t port = 43332;
 using namespace boost::asio;
@@ -33,7 +33,7 @@ void client()
 		recv_num ++;
 		total_us = total_us + (t2 -t1).total_microseconds();
 		//printf("client recv msg [%d] %.*s\n", n, n, buf);
-		
+
 		printf("current avg us is %f\n", float(total_us) / recv_num);
 	}catch(...)
 	{
@@ -51,7 +51,7 @@ int main()
 		go client;
 		i++;
 	}
-
+	co_sched.Stop();
     // 单线程执行
     co_sched.Start();
     return 0;
